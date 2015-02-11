@@ -13,17 +13,19 @@
 
     <servlet-mapping>
         <servlet-name>ServletDispatcher</servlet-name>
-        <url-pattern>/LoginOrRegister</url-pattern>
-        <url-pattern>/AddMessage</url-pattern>
-        <url-pattern>/DeleteMessage</url-pattern>
-        <url-pattern>/ShiftMessage</url-pattern>
+        <url-pattern>/GuestBook/LoginOrRegister</url-pattern>
+        <url-pattern>/GuestBook/AddMessage</url-pattern>
+        <url-pattern>/GuestBook/DeleteMessage</url-pattern>
+        <url-pattern>/GuestBook/ShiftMessage</url-pattern>
+        <url-pattern>/GuestBook/Exit</url-pattern>
+        <url-pattern>/GuestBook</url-pattern>
     </servlet-mapping>
 
 
 
 
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>GuestBook</welcome-file>
     </welcome-file-list>
 
 </web-app>

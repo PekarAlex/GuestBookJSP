@@ -7,12 +7,9 @@ import java.sql.SQLException;
 
 
 public class User {
-    private String userName,password;
-    private int isadmin;
+    private String userName, password;
+    private Boolean admin;
     private int id;
-
-    public User() {
-    }
 
     public String getUserName() {
         return userName;
@@ -30,12 +27,12 @@ public class User {
         this.id = id;
     }
 
-    public int getIsadmin() {
-        return isadmin;
+    public Boolean getAdmin() {
+        return admin;
     }
 
-    public void setIsadmin(int isadmin) {
-        this.isadmin = isadmin;
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
     public String getPassword() {
@@ -46,46 +43,51 @@ public class User {
         this.password = password;
     }
 
-    public void registerUser(){
-        try (Connection con=ConnectionProvider.getCon()) {
-            PreparedStatement ps=con.prepareStatement("insert into users (UserName,IsAdmin,Password) values(?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setString(1, this.getUserName());
-            ps.setInt(2, this.getIsadmin());
-            ps.setString(3,this.getPassword());
+    public static User register(String userName, String password) {
+        User u;
+        try (Connection con = ConnectionProvider.getCon()) {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO users (userName,admin,password) VALUES(?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, userName);
+            ps.setBoolean(2, false);
+            ps.setString(3, password);
 
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
-            this.setId(rs.getInt(1));
-
-
-        } catch(SQLException e) {
+            u = new User();
+            u.setUserName(userName);
+            u.setPassword(password);
+            u.setAdmin(false);
+            u.setId(rs.getInt(1));
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return u;
     }
 
-    public boolean logonUser(){
-        boolean status=false;
-        try(Connection con=ConnectionProvider.getCon()){
+    public static User get(String userName) {
+        User u = null;
+        try (Connection con = ConnectionProvider.getCon()) {
 
-            PreparedStatement ps=con.prepareStatement("SELECT * From users WHERE (UserName=?)");
-            ps.setString(1, this.getUserName());
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE (userName=?)");
+            ps.setString(1, userName);
 
-            ResultSet rs=ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                if (this.getPassword().equals(rs.getString("Password"))) {
-                    this.setId(rs.getInt("Id"));
-                    this.setIsadmin(rs.getInt("IsAdmin"));
-                    status = true;
-                }
+                u = new User();
+                u.setUserName(userName);
+                u.setPassword(rs.getString("password"));
+                u.setAdmin(rs.getBoolean("admin"));
+                u.setId(rs.getInt("id"));
             }
 
-
-        }catch(SQLException e){throw new RuntimeException(e);}
-
-        return status;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return u;
     }
+
 
 }

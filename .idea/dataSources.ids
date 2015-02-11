@@ -8,22 +8,22 @@
     <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
     <schema name="" catalog="guestbook"/>
     <table name="guestmessages" schema="" catalog="guestbook" type="TABLE">
-      <column name="User_Id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
-      <column name="Message" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
-      <column name="MessageDateTime" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
-      <column name="message_Id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <primary-key name="PRIMARY" columns="message_Id"/>
-      <foreign-key name="guestmessages_ibfk_1" columns="User_Id" ref-table="users" ref-schema="" ref-catalog="guestbook" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <column name="user_Id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="text" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="createStamp" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="guestmessages_ibfk_1" columns="user_Id" ref-table="users" ref-schema="" ref-catalog="guestbook" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="users" schema="" catalog="guestbook" type="TABLE">
-      <column name="UserName" sqlType="CHAR" precision="30" scale="0" nullable="false" jdbcType="1"/>
-      <column name="IsAdmin" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="userName" sqlType="CHAR" precision="30" scale="0" nullable="true" jdbcType="1"/>
+      <column name="admin" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="Id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="Password" sqlType="CHAR" precision="30" scale="0" nullable="false" jdbcType="1"/>
+      <column name="password" sqlType="CHAR" precision="30" scale="0" nullable="true" jdbcType="1"/>
       <primary-key name="PRIMARY" columns="Id"/>
-      <exported-key name="guestmessages_ibfk_1" table="guestmessages" schema="" catalog="guestbook" columns="User_Id"/>
+      <exported-key name="guestmessages_ibfk_1" table="guestmessages" schema="" catalog="guestbook" columns="user_Id"/>
       <index name="unique_Id" unique="true" columns="Id"/>
-      <index name="unique_UserName" unique="true" columns="UserName"/>
+      <index name="unique_UserName" unique="true" columns="userName"/>
     </table>
   </data-source>
 </component>

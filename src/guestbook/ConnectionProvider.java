@@ -1,12 +1,13 @@
 package guestbook;
 
 import java.sql.*;
-import static guestbook.Provider.*;
-
 
 
 public class ConnectionProvider {
-
+    public static final String DRIVER = "com.mysql.jdbc.Driver";
+    public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/GuestBook";
+    public static final String USERNAME = "Work";
+    public static final String PASSWORD = "work";
 
     static {
         try {
