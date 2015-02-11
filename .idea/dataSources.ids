@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - GuestBook@localhost" uuid="66357c9b-76a3-4088-af19-ffea23cb894a">
+    <database-info product="MySQL" version="5.6.23-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.34 ( Revision: jess.balint@oracle.com-20141014163213-wqbwpf1ok2kvo1om )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="guestbook"/>
+    <table name="guestmessages" schema="" catalog="guestbook" type="TABLE">
+      <column name="User_Id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Message" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="MessageDateTime" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="message_Id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="message_Id"/>
+      <foreign-key name="guestmessages_ibfk_1" columns="User_Id" ref-table="users" ref-schema="" ref-catalog="guestbook" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="users" schema="" catalog="guestbook" type="TABLE">
+      <column name="UserName" sqlType="CHAR" precision="30" scale="0" nullable="false" jdbcType="1"/>
+      <column name="IsAdmin" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <column name="Id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="Password" sqlType="CHAR" precision="30" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="Id"/>
+      <exported-key name="guestmessages_ibfk_1" table="guestmessages" schema="" catalog="guestbook" columns="User_Id"/>
+      <index name="unique_Id" unique="true" columns="Id"/>
+      <index name="unique_UserName" unique="true" columns="UserName"/>
+    </table>
+  </data-source>
+</component>
