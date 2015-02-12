@@ -76,6 +76,10 @@ public class Message {
 
     public String getTextWithoutScriptTags() {
 
+        return text.replaceAll("(?i)<(/?script[^>]*)>", "&lt;$1&gt;");
+    }
+
+    public String getTextWithoutScriptTagsAndCR() {
         return text.replaceAll("(?i)<(/?script[^>]*)>", "&lt;$1&gt;").replaceAll("(\r\n|\n)", "<br />");
     }
 
