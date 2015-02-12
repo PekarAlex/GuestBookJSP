@@ -25,10 +25,15 @@ public class ServletDispatcher extends HttpServlet {
 
         if (uri.endsWith("/LoginOrRegister"))
             loginOrRegister(request, currentUser);
-        else if (uri.endsWith("/AddMessage"))
-            addMessage(request, currentUser);
+        else if (uri.endsWith("/AddMessage")) {
+            String messageId = request.getParameter("messageId");
+            if (messageId != null) updateMessage(request, currentUser, messageId);
+            else addMessage(request, currentUser);
+        }
         else if (uri.endsWith("/DeleteMessage"))
             deleteMessage(request, currentUser);
+        else if (uri.endsWith("/EditMessage"))
+            editMessage(request, currentUser);
         else if (uri.endsWith("/Exit")) {
             request.getSession().setAttribute("user", null);
             request.getSession().setAttribute("userName", null);
@@ -41,6 +46,7 @@ public class ServletDispatcher extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
             request.getSession().setAttribute("AttentionMessage", null);
+            request.getSession().setAttribute("editingMessage", null);
         } else response.sendRedirect("/GuestBook");
 
     }
@@ -86,6 +92,22 @@ public class ServletDispatcher extends HttpServlet {
         }
     }
 
+    private void updateMessage(HttpServletRequest request,  User currentUser, String messageId) {
+        if (currentUser != null) {
+            String stringMessage = request.getParameter("message");
+            if ((stringMessage != null) && (!stringMessage.isEmpty())) {
+                Message newMessage = new Message();
+                newMessage.setText(stringMessage);
+                newMessage.setId(Integer.parseInt(messageId));
+                newMessage.update();
+            } else
+            {
+                request.getSession().setAttribute("AttentionMessage", "You should add any text into the textarea");
+            }
+
+        }
+    }
+
     private void deleteMessage(HttpServletRequest request, User currentUser) {
         if ((currentUser != null) && (currentUser.getAdmin())) {
             String messageId = request.getParameter("messageId");
@@ -93,6 +115,17 @@ public class ServletDispatcher extends HttpServlet {
                 Message newMessage = new Message();
                 newMessage.setId(Integer.parseInt(messageId));
                 newMessage.delete();
+            }
+        } //else response.sendError(404);
+    }
+
+    private void editMessage(HttpServletRequest request, User currentUser) {
+        if ((currentUser != null) && (currentUser.getAdmin())) {
+            String messageId = request.getParameter("messageId");
+            if (messageId != null) {
+                Message newMessage = Message.get(messageId);
+                request.getSession().setAttribute("AttentionMessage", "Edit existing message");
+                request.getSession().setAttribute("editingMessage",newMessage);
             }
         } //else response.sendError(404);
     }

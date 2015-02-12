@@ -24,6 +24,10 @@ textarea {
     text-align:center;
 }
 
+.MessageTextWrap{
+    word-wrap:break-word;
+}
+
 .Navigation{
     float:right;
     width:200px;

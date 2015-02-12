@@ -74,10 +74,7 @@ public class Message {
         return text;
     }
 
-    public String getTextWithoutScriptTags() {
 
-        return text.replaceAll("(?i)<(/?script[^>]*)>", "&lt;$1&gt;");
-    }
 
     public String getTextWithoutScriptTagsAndCR() {
         return text.replaceAll("(?i)<(/?script[^>]*)>", "&lt;$1&gt;").replaceAll("(\r\n|\n)", "<br />");
@@ -100,6 +97,40 @@ public class Message {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void update() {
+
+        try (Connection con = ConnectionProvider.getCon()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE guestmessages SET text=? WHERE id=?");
+            ps.setString(1, this.getText());
+            ps.setInt(2, this.getId());
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static Message get(String messageId) {
+        Message message=null;
+        try (Connection con = ConnectionProvider.getCon()) {
+            PreparedStatement ps = con.prepareStatement("SELECT guestmessages.id,userName,guestmessages.text,createStamp FROM guestmessages LEFT JOIN users ON guestmessages.user_Id=users.Id WHERE guestmessages.Id=?");
+            ps.setInt(1, Integer.parseInt(messageId));
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                message = new Message();
+                message.setUserName(rs.getString("userName"));
+                message.setText(rs.getNString("text"));
+                message.setCreated(rs.getTimestamp("createStamp"));
+                message.setId(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return message;
     }
 
     public void delete() {

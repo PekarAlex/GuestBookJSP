@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class ConnectionProvider {
     public static final String DRIVER = "com.mysql.jdbc.Driver";
-    public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/GuestBook";
+    public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/guestbook";
     public static final String USERNAME = "Work";
     public static final String PASSWORD = "work";
 

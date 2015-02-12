@@ -10,7 +10,7 @@
     <table name="guestmessages" schema="" catalog="guestbook" type="TABLE">
       <column name="user_Id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="text" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
-      <column name="createStamp" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="createStamp" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA="/>
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="guestmessages_ibfk_1" columns="user_Id" ref-table="users" ref-schema="" ref-catalog="guestbook" ref-columns="Id" update-rule="3" delete-rule="3" deferrability="2"/>
