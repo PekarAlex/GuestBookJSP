@@ -16,7 +16,6 @@
         <url-pattern>/GuestBook/LoginOrRegister</url-pattern>
         <url-pattern>/GuestBook/AddMessage</url-pattern>
         <url-pattern>/GuestBook/DeleteMessage</url-pattern>
-        <url-pattern>/GuestBook/ShiftMessage</url-pattern>
         <url-pattern>/GuestBook/Exit</url-pattern>
         <url-pattern>/GuestBook</url-pattern>
     </servlet-mapping>

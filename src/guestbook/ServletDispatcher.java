@@ -23,32 +23,37 @@ public class ServletDispatcher extends HttpServlet {
         String uri = request.getRequestURI();
         User currentUser = (User) request.getSession().getAttribute("user");
 
-        if (uri.endsWith("/LoginOrRegister")) {
-            String loginClicked = request.getParameter("login");
-            String userName = request.getParameter("userName");
-            String password = request.getParameter("password");
-            if (userName != null) request.getSession().setAttribute("userName", userName);
-            if (currentUser == null) {
-                if (loginClicked != null) userLogin(request, userName, password);
-                else userRegister(request, userName, password);
-            }
-        } else if (uri.endsWith("/AddMessage"))
+        if (uri.endsWith("/LoginOrRegister"))
+            loginOrRegister(request, currentUser);
+        else if (uri.endsWith("/AddMessage"))
             addMessage(request, currentUser);
         else if (uri.endsWith("/DeleteMessage"))
             deleteMessage(request, currentUser);
-        else if (uri.endsWith("/Exit")){
+        else if (uri.endsWith("/Exit")) {
             request.getSession().setAttribute("user", null);
             request.getSession().setAttribute("userName", null);
         }
 
 
 
-        if ((uri.endsWith("/GuestBook"))||(uri.endsWith("/ShiftMessage")))
+        if (uri.endsWith("/GuestBook"))
         {
             RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
+            request.getSession().setAttribute("AttentionMessage", null);
         } else response.sendRedirect("/GuestBook");
 
+    }
+
+    private void loginOrRegister(HttpServletRequest request, User currentUser) {
+        String loginClicked = request.getParameter("login");
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        if (userName != null) request.getSession().setAttribute("userName", userName);
+        if (currentUser == null) {
+            if (loginClicked != null) userLogin(request, userName, password);
+            else userRegister(request, userName, password);
+        }
     }
 
     private void userRegister(HttpServletRequest request, String userName, String password) {
@@ -73,6 +78,9 @@ public class ServletDispatcher extends HttpServlet {
                 Message newMessage = new Message();
                 newMessage.setText(stringMessage);
                 newMessage.add(currentUser);
+            } else
+            {
+                request.getSession().setAttribute("AttentionMessage", "You should add any text into the textarea");
             }
 
         }

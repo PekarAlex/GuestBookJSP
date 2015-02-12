@@ -1,0 +1,49 @@
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+textarea {
+    width:100%;
+}
+.Logon1Col{
+    width:60px;
+    text-align:left;
+}
+.Logon2Col{
+    float:left;
+    width:200px;
+}
+.MessageFixedCol{
+    width:100px;
+}
+.MessageFloatCol{
+    width:100%;
+}
+
+.MessageTextCenter{
+    text-align:center;
+}
+
+.Navigation{
+    float:right;
+    width:200px;
+    text-align:right;
+}
+.Head1Col
+{
+    width:100%;
+    text-align:left;
+    color: red;
+    font-weight: bold;
+}
+.Head2Col
+{
+    float:right;
+    width:100px;
+    margin-left:-100px;
+}
+.AttentionText{
+    color: red;
+    font-weight: bold;
+}
+

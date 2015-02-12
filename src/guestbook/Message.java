@@ -13,7 +13,7 @@ public class Message {
     private int id; //for cutting message from db
     private String userName;
     private String text;
-    private Date createStamp;
+    private Date created;
 
     static public ArrayList<Message> readMessages(int count, int offset) {
         try (Connection con = ConnectionProvider.getCon()) {
@@ -26,12 +26,12 @@ public class Message {
 
             ArrayList<Message> resultMessagesList = new ArrayList<>();
             while (rs.next()) {
-                Message oneMessage = new Message();
-                oneMessage.setUserName(rs.getString("userName"));
-                oneMessage.setText(rs.getNString("text"));
-                oneMessage.setCreateStamp(rs.getTimestamp("createStamp"));
-                oneMessage.setId(rs.getInt("id"));
-                resultMessagesList.add(oneMessage);
+                Message message = new Message();
+                message.setUserName(rs.getString("userName"));
+                message.setText(rs.getNString("text"));
+                message.setCreated(rs.getTimestamp("createStamp"));
+                message.setId(rs.getInt("id"));
+                resultMessagesList.add(message);
             }
 
             return resultMessagesList;
@@ -62,12 +62,12 @@ public class Message {
     }
 
 
-    public Date getCreateStamp() {
-        return createStamp;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setCreateStamp(Date createStamp) {
-        this.createStamp = createStamp;
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public String getText() {
